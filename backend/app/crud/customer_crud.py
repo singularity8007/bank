@@ -9,15 +9,16 @@ ph = PasswordHasher()
 def create_customer(db: Session, customer: CustomerCreate):
     """Create a new customer with hashed password."""
     hashed_password = ph.hash(customer.password)
+    
     db_customer = Customer(
-        customer_id=uuid.uuid4(),
-        first_name=customer.first_name,
-        last_name=customer.last_name,
+        customerid=uuid.uuid4(),           # ← lowercase
+        firstname=customer.first_name,
+        lastname=customer.last_name,
         email=customer.email,
-        phone_number=customer.phone_number,
+        phonenumber=customer.phone_number,
         ssn=customer.ssn,
-        date_of_birth=customer.date_of_birth,
-        address=customer.address,
+        dateofbirth=customer.date_of_birth,
+        cust_address=customer.address,
         password_hash=hashed_password,
     )
     db.add(db_customer)
@@ -26,4 +27,5 @@ def create_customer(db: Session, customer: CustomerCreate):
     return db_customer
 
 def get_customer_by_email(db: Session, email: str):
+    # Use the correct attribute name from the model
     return db.query(Customer).filter(Customer.email == email).first()

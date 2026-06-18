@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from datetime import date
 from typing import Optional
+from uuid import UUID
 
 class CustomerCreate(BaseModel):
     first_name: str
@@ -13,10 +14,9 @@ class CustomerCreate(BaseModel):
     password: str
 
 class CustomerResponse(BaseModel):
-    customer_id: str
+    customer_id: UUID
     first_name: str
     last_name: str
     email: EmailStr
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}

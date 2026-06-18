@@ -1,4 +1,4 @@
-CREATE TABLE Transaction (
+CREATE TABLE Bank.Transaction (
     SOURCE_ACCOUNT_ID UUID,
     Receipient_Account_ID UUID,
     TRANSACTION_ID UUID PRIMARY KEY,
@@ -10,8 +10,6 @@ CREATE TABLE Transaction (
     Transaction_Status VARCHAR(50) NOT NULL,
     Notes VARCHAR(512),
     transaction_direction VARCHAR(8) NOT NULL -- INCOMING or OUTGOING 
-
-
 
 );
 
