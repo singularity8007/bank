@@ -1,12 +1,15 @@
-from sqlalchemy import Column, String, Numeric, DateTime, Integer
+from sqlalchemy import Column, String, Numeric, DateTime
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from datetime import datetime
+import uuid
 from ..database import Base
 
 class Account(Base):
     __tablename__ = "accounts"
 
-    account_id = Column(Integer, primary_key=True, autoincrement=True)
+    # Using UUID primary key (much more reliable)
+    account_id = Column(PG_UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    
     customer_id = Column(PG_UUID(as_uuid=True), nullable=False)
     account_type = Column(String(50), nullable=False)
 

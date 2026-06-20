@@ -1,17 +1,19 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from uuid import UUID
 from decimal import Decimal
-from typing import Literal
+
 
 class AccountCreate(BaseModel):
-    account_type: Literal["checking", "savings"]
+    customer_id: UUID
+    account_type: str
+
 
 class AccountResponse(BaseModel):
-    account_id: int
-    customer_id: str
+    account_id: UUID
+    customer_id: UUID
     account_type: str
     available_balance: Decimal
     current_balance: Decimal
-    status: str
+    account_status: str = Field(..., alias="account_status")
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
