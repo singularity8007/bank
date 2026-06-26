@@ -1,5 +1,5 @@
-CREATE TABLE Customers (
-    CustomerID UUID PRIMARY KEY, 
+CREATE TABLE bank.Customers (
+    CustomerID UUID PRIMARY KEY,
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
     Email VARCHAR(100) NOT NULL UNIQUE,
@@ -10,4 +10,5 @@ CREATE TABLE Customers (
     Password_hash VARCHAR(255) NOT NULL
 
 );
+
 
