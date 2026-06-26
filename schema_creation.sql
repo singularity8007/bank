@@ -36,7 +36,7 @@ GRANT REFERENCES ON bank.account TO db_user;
 
 -- If Account table is in a DIFFERENT schema (e.g., public)
 GRANT USAGE ON SCHEMA public TO db_user;
-GRANT REFERENCES ON public.account TO db_user;
+
 -- Explicitly grant REFERENCES on the already-existing Account table
 GRANT REFERENCES ON bank.account TO db_user;
 
