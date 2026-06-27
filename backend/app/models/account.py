@@ -5,7 +5,7 @@ import uuid
 from ..database import Base
 
 class Account(Base):
-    __tablename__ = "accounts"
+    __tablename__ = "account"
 
     # Using UUID primary key (much more reliable)
     account_id = Column(PG_UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 import uuid
 from ..database import Base
 
-class Customer(Base):
+class Customers(Base):
     __tablename__ = "customers"
 
     customerid = Column("customerid", PG_UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

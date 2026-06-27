@@ -1,24 +1,24 @@
 from sqlalchemy.orm import Session
-from ..models.customer import Customer
-from ..schemas.customer import CustomerCreate
+from ..models.customers import Customers
+from ..schemas.customers import CustomerCreate
 from argon2 import PasswordHasher
 import uuid
 
 ph = PasswordHasher()
 
-def create_customer(db: Session, customer: CustomerCreate):
+def create_customer(db: Session, customers: CustomerCreate):
     """Create a new customer with hashed password."""
-    hashed_password = ph.hash(customer.password)
+    hashed_password = ph.hash(customers.password)
     
-    db_customer = Customer(
+    db_customer = Customers(
         customerid=uuid.uuid4(),           # ← lowercase
-        firstname=customer.first_name,
-        lastname=customer.last_name,
-        email=customer.email,
-        phonenumber=customer.phone_number,
-        ssn=customer.ssn,
-        dateofbirth=customer.date_of_birth,
-        cust_address=customer.address,
+        firstname=customers.first_name,
+        lastname=customers.last_name,
+        email=customers.email,
+        phonenumber=customers.phone_number,
+        ssn=customers.ssn,
+        dateofbirth=customers.date_of_birth,
+        cust_address=customers.address,
         password_hash=hashed_password,
     )
     db.add(db_customer)
@@ -28,4 +28,4 @@ def create_customer(db: Session, customer: CustomerCreate):
 
 def get_customer_by_email(db: Session, email: str):
     # Use the correct attribute name from the model
-    return db.query(Customer).filter(Customer.email == email).first()
+    return db.query(Customers).filter(Customers.email == email).first()

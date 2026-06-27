@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from ..schemas.customer import CustomerCreate, CustomerResponse
+from ..schemas.customers import CustomerCreate, CustomerResponse
 from ..crud.customer_crud import create_customer, get_customer_by_email
 from ..database import get_db
 
