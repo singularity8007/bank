@@ -12,7 +12,7 @@ def create_account(customer_id: UUID, account_type: str):
             account_id = uuid.uuid4()   # ← Generate UUID here
 
             cur.execute("""
-                INSERT INTO accounts (
+                INSERT INTO account (
                     account_id, 
                     customer_id, 
                     account_type, 
@@ -54,7 +54,7 @@ def deposit_money(account_id: UUID, amount: Decimal):
             # Get current balances
             cur.execute("""
                 SELECT available_balance, current_balance 
-                FROM accounts 
+                FROM account 
                 WHERE account_id = %(account_id)s
             """, {"account_id": account_id})
 
@@ -67,7 +67,7 @@ def deposit_money(account_id: UUID, amount: Decimal):
 
             # Update balances
             cur.execute("""
-                UPDATE accounts 
+                UPDATE account
                 SET available_balance = %(new_available)s,
                     current_balance = %(new_current)s
                 WHERE account_id = %(account_id)s
