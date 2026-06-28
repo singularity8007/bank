@@ -10,7 +10,7 @@ def create_customer(customer_data):
     conn = get_connection()
     try:
         with conn.cursor() as cur:
-            password_hash = ph.hash(customer_data.password)
+            password_hash = ph.hash(customer_data["password"])
             customer_id = uuid.uuid4()
 
             query = """
@@ -40,13 +40,13 @@ def create_customer(customer_data):
 
             params = {
                 "customerid": customer_id,
-                "firstname": customer_data.first_name,
-                "lastname": customer_data.last_name,
-                "email": customer_data.email,
-                "phonenumber": customer_data.phone_number,
-                "socialsecuritynumber": customer_data.ssn,
-                "dateofbirth": customer_data.date_of_birth,
-                "cust_address": customer_data.address,
+                "firstname": customer_data["first_name"],
+                "lastname": customer_data["last_name"],
+                "email": customer_data["email"],
+                "phonenumber": customer_data["phone_number"],
+                "socialsecuritynumber": customer_data["ssn"],
+                "dateofbirth": customer_data["date_of_birth"],
+                "cust_address": customer_data["address"],
                 "password_hash": password_hash
             }
 
