@@ -1,23 +1,19 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+import psycopg
+from psycopg.rows import dict_row
 from dotenv import load_dotenv
 import os
+from app.logging_config import logger
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://bankuser:bankpassword@localhost:5432/bankdb")
-
-engine = create_engine(DATABASE_URL, echo=True)  # echo=True shows SQL (good for learning)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base = declarative_base()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
-def get_db():
-    """Dependency for FastAPI routes to get a database session."""
-    db = SessionLocal()
+def get_connection():
+    """Returns a new database connection"""
     try:
-        yield db
-    finally:
-        db.close()
+        conn = psycopg.connect(DATABASE_URL, row_factory=dict_row)
+        return conn
+    except Exception as e:
+        logger.error(f"Database connection failed: {e}")
+        raise

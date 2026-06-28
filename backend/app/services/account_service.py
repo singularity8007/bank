@@ -1,6 +1,7 @@
 from app.database import get_connection
 from app.logging_config import logger
 from decimal import Decimal
+import uuid
 from uuid import UUID
 
 
@@ -8,11 +9,27 @@ def create_account(customer_id: UUID, account_type: str):
     conn = get_connection()
     try:
         with conn.cursor() as cur:
+            account_id = uuid.uuid4()   # ← Generate UUID here
+
             cur.execute("""
-                INSERT INTO accounts (customer_id, account_type, available_balance, current_balance, account_status)
-                VALUES (%(customer_id)s, %(account_type)s, 0.00, 0.00, 'active')
+                INSERT INTO accounts (
+                    account_id, 
+                    customer_id, 
+                    account_type, 
+                    available_balance, 
+                    current_balance, 
+                    account_status
+                ) VALUES (
+                    %(account_id)s,
+                    %(customer_id)s,
+                    %(account_type)s,
+                    0.00,
+                    0.00,
+                    'active'
+                )
                 RETURNING account_id, customer_id, account_type, available_balance, current_balance, account_status
             """, {
+                "account_id": account_id,
                 "customer_id": customer_id,
                 "account_type": account_type
             })
